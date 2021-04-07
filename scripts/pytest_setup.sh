@@ -1,6 +1,5 @@
 #!/bin/bash
 cp test_settings.py settings.py
-pip install --upgrade pip3
-pip3 install pytest
-pip install pipenv
+pip3 install --upgrade pip
+pip3 install pipenv
 pipenv install --ignore-pipfile
