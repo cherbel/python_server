@@ -24,10 +24,12 @@ class Application(tornado.web.Application):
         (r"/search/all", mask.SearchAllHandler),
         (r"/search/(.*)/(.*)", mask.SearchHandler),
         (r"/update/list_photos", mask.ListProfilePhotoHandler),
+        (r"/update/list_all_photos", mask.ListAllProfilePhotoHandler),
+        (r"/update/delete_photo/(.*)", mask.DeletePhotoHandler),
         (r"/update/list_pending_photos", mask.ListPendingProfilePhotoHandler),
         (r"/update/upload_photo", mask.UploadProfilePhotoHandler),
         (r"/update/upload_photo_direct", mask.DirectUploadProfilePhotoHandler),
-        (r"/verify/mask-permissions", mask.VerifyMaskUploadPermissions),
+        (r"/verify/mask-permissions", mask.VerifyMaskUploadPermissionsHandler),
         (r"/update/(.*)", mask.ProfileUpdateHandler),
         # jobs
         (r"/forms/job/new", forms.NewFormHandler),

@@ -238,7 +238,7 @@ class DirectUploadProfilePhotoHandler(BaseHandler):
             raise Exception(e)
     get = post
 
-class VerifyMaskUploadPermissions(BaseHandler):
+class VerifyMaskUploadPermissionsHandler(BaseHandler):
     '''
         Verify  Permissions to upload to mask.
     '''
@@ -269,6 +269,39 @@ class ListProfilePhotoHandler(BaseHandler):
             photo_list = glob.glob(glob_pattern)
             photo_list = ['profiles' + photo.replace(PROFILE_PHOTOS_LOCATION, '') for photo in photo_list]
             self.write({'photos': photo_list})
+        except Exception as e:
+            logger.info(e)
+            raise Exception(e)
+
+class ListAllProfilePhotoHandler(BaseHandler):
+    '''
+    Return the authenticated user's profile pictures, example: {"photos": ["profiles/1718/12345_1234567.jpg"]}
+    '''
+    @tornado.web.authenticated
+    def get(self):
+        try:
+            glob_pattern = PROFILE_PHOTOS_LOCATION + '/*' # SEARCHING WITH DASH
+            photo_list = glob.glob(glob_pattern)
+            photo_list = [photo.replace(PROFILE_PHOTOS_LOCATION, '') for photo in photo_list]
+            self.write({'photos': photo_list})
+        except Exception as e:
+            logger.info(e)
+            raise Exception(e)
+
+class DeletePhotoHandler(BaseHandler):
+    '''
+    Deletes Photos given to it
+    '''
+    @tornado.web.authenticated
+    def get(self, query_photo):
+        try:
+            image_path = PROFILE_PHOTOS_LOCATION + query_photo
+            if os.path.isfile(image_path):
+                os.remove(image_path)
+            else:
+                print(image_path)
+                print(os.getcwd())
+
         except Exception as e:
             logger.info(e)
             raise Exception(e)
